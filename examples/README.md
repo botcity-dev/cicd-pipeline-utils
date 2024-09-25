@@ -10,23 +10,23 @@ Each folder contains:
 
 ## Available CI/CD Technologies
 
-- **[GitHub Actions](./github-actions/)**
+- **[GitHub Actions](./github_actions/)**
   - Contains an example GitHub Actions workflow file (`github-actions.yml`).
   - Refer to the `README.md` in the folder for more details.
 
-- **[Azure Pipelines](./azure-pipelines/)**
+- **[Azure Pipelines](./azure_pipelines/)**
   - Contains an example Azure Pipelines YAML file (`azure-pipelines.yml`).
   - Refer to the `README.md` in the folder for more details.
 
-- **[Woodpecker CI](./woodpecker/)**
+- **[Woodpecker CI](./woodpecker_ci/)**
   - Contains an example Woodpecker CI pipeline file (`woodpecker.yml`).
   - Refer to the `README.md` in the folder for more details.
 
-- **[Bitbucket Pipelines](./bitbucket-pipelines/)**
+- **[Bitbucket Pipelines](./bitbucket_pipelines/)**
   - Contains an example Bitbucket Pipelines YAML file (`bitbucket-pipelines.yml`).
   - Refer to the `README.md` in the folder for more details.
 
-- **[GitLab CI](./gitlab-ci/)**
+- **[GitLab CI](./gitlab_ci/)**
   - Contains an example GitLab CI YAML file (`gitlab-ci.yml`).
   - Refer to the `README.md` in the folder for more details.
 
