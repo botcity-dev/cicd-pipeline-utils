@@ -1,0 +1,54 @@
+
+pipeline {
+    agent any
+
+    environment {
+        SERVER = credentials('botcity-server')
+        LOGIN = credentials('botcity-login')
+        KEY = credentials('botcity-key')
+    }
+
+    stages {
+        stage('Checkout Repository') {
+            steps {
+                script {
+                    git branch: 'main', url: 'https://github.com/your-repo.git'
+                }
+            }
+        }
+
+        stage('Build Bot') {
+            steps {
+                script {
+                    sh 'chmod +x build.sh'
+                    sh './build.sh'
+                }
+            }
+        }
+
+        stage('Checkout bot.sh Script') {
+            steps {
+                script {
+                    sh 'git clone --branch v1.0 https://github.com/botcity-dev/cicd-pipeline-utils.git'
+                    sh 'chmod +x cicd-pipeline-utils/scripts/bot.sh'
+                }
+            }
+        }
+
+        stage('Deploy Bot') {
+            steps {
+                script {
+                    sh 'cicd-pipeline-utils/scripts/bot.sh deploy -version "v1.2.0" -botFile "./build/bot.zip" -botId "ExampleBot" -type "python" -repository "DEFAULT"'
+                }
+            }
+        }
+
+        stage('Release Bot') {
+            steps {
+                script {
+                    sh 'cicd-pipeline-utils/scripts/bot.sh release -version "v1.2.0" -botId "ExampleBot"'
+                }
+            }
+        }
+    }
+}

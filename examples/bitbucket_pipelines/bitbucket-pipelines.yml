@@ -1,0 +1,24 @@
+
+image: atlassian/default-image:latest
+
+pipelines:
+  default:
+    - step:
+        name: Build and Deploy Bot
+        caches:
+          - git
+        script:
+          - git clone https://github.com/your-repo.git .
+          - chmod +x build.sh
+          - ./build.sh
+
+          - git clone --branch v1.0 https://github.com/botcity-dev/cicd-pipeline-utils.git
+          - chmod +x cicd-pipeline-utils/scripts/bot.sh
+
+          - cicd-pipeline-utils/scripts/bot.sh deploy -version "v1.2.0" -botFile "./build/bot.zip" -botId "ExampleBot" -type "python" -repository "DEFAULT"
+
+          - cicd-pipeline-utils/scripts/bot.sh release -version "v1.2.0" -botId "ExampleBot"
+        environment:
+          SERVER: $SERVER
+          LOGIN: $LOGIN
+          KEY: $KEY

@@ -1,0 +1,36 @@
+
+stages:
+  - build
+  - deploy
+  - release
+
+build_bot:
+  stage: build
+  script:
+    - git clone https://github.com/your-repo.git .
+    - chmod +x build.sh
+    - ./build.sh
+
+checkout_script:
+  stage: deploy
+  script:
+    - git clone --branch v1.0 https://github.com/botcity-dev/cicd-pipeline-utils.git
+    - chmod +x cicd-pipeline-utils/scripts/bot.sh
+
+deploy_bot:
+  stage: deploy
+  script:
+    - cicd-pipeline-utils/scripts/bot.sh deploy -version "v1.2.0" -botFile "./build/bot.zip" -botId "ExampleBot" -type "python" -repository "DEFAULT"
+  environment:
+    SERVER: $SERVER
+    LOGIN: $LOGIN
+    KEY: $KEY
+
+release_bot:
+  stage: release
+  script:
+    - cicd-pipeline-utils/scripts/bot.sh release -version "v1.2.0" -botId "ExampleBot"
+  environment:
+    SERVER: $SERVER
+    LOGIN: $LOGIN
+    KEY: $KEY

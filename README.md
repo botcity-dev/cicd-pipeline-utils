@@ -4,6 +4,9 @@ BotCity natively supports GitHub Actions usage via the [BotCity Actions - Bots](
 
 As a way to support many other CI/CD pipeline technologies we provide you with the Bash scripts detailed below.
 
+> [!TIP]
+> Check out our examples for many CI/CD pipelines technologies [clicking here](./examples/README.md).
+
 ## Bot Management Script
 
 `bot.sh` is a versatile Bash script designed to handle common bot management tasks, including deploying, updating, and releasing bots through the BotCity Orchestrator API.

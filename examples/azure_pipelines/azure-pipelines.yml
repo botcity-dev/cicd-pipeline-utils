@@ -1,0 +1,39 @@
+
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
+
+- checkout: self
+
+- script: |
+    chmod +x build.sh
+    ./build.sh
+  displayName: 'Build the Bot'
+
+- script: |
+    git clone --branch v1.0 https://github.com/botcity-dev/cicd-pipeline-utils.git
+    chmod +x cicd-pipeline-utils/scripts/bot.sh
+  displayName: 'Checkout bot.sh from repository'
+
+- script: |
+    cicd-pipeline-utils/scripts/bot.sh deploy -version "v1.2.0" -botFile "./build/bot.zip" -botId "ExampleBot" -type "python" -repository "DEFAULT"
+  displayName: 'Deploy the Bot'
+  env:
+    SERVER: $(SERVER)
+    LOGIN: $(LOGIN)
+    KEY: $(KEY)
+
+- script: |
+    cicd-pipeline-utils/scripts/bot.sh release -version "v1.2.0" -botId "ExampleBot"
+  displayName: 'Release the Bot'
+  env:
+    SERVER: $(SERVER)
+    LOGIN: $(LOGIN)
+    KEY: $(KEY)

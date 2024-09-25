@@ -1,0 +1,41 @@
+
+name: Bot Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run build script
+        run: |
+          chmod +x build.sh
+          ./build.sh
+
+      - name: Checkout bot.sh from repository
+        run: |
+          git clone --branch v1.0 https://github.com/botcity-dev/cicd-pipeline-utils.git
+          chmod +x cicd-pipeline-utils/scripts/bot.sh
+
+      - name: Deploy Bot
+        env:
+          SERVER: ${{ secrets.SERVER }}
+          LOGIN: ${{ secrets.LOGIN }}
+          KEY: ${{ secrets.KEY }}
+        run: |
+          cicd-pipeline-utils/scripts/bot.sh deploy -version "v1.2.0" -botFile "./build/bot.zip" -botId "ExampleBot" -type "python" -repository "DEFAULT"
+
+      - name: Release Bot
+        env:
+          SERVER: ${{ secrets.SERVER }}
+          LOGIN: ${{ secrets.LOGIN }}
+          KEY: ${{ secrets.KEY }}
+        run: |
+          cicd-pipeline-utils/scripts/bot.sh release -version "v1.2.0" -botId "ExampleBot"

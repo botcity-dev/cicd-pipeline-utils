@@ -1,0 +1,36 @@
+
+pipeline:
+  checkout:
+    image: alpine/git
+    commands:
+      - git clone https://github.com/your-repo.git .
+  
+  build:
+    image: alpine:latest
+    commands:
+      - chmod +x build.sh
+      - ./build.sh
+
+  checkout_script:
+    image: alpine/git
+    commands:
+      - git clone --branch v1.0 https://github.com/botcity-dev/cicd-pipeline-utils.git
+      - chmod +x cicd-pipeline-utils/scripts/bot.sh
+
+  deploy_bot:
+    image: alpine:latest
+    secrets:
+      - SERVER
+      - LOGIN
+      - KEY
+    commands:
+      - cicd-pipeline-utils/scripts/bot.sh deploy -version "v1.2.0" -botFile "./build/bot.zip" -botId "ExampleBot" -type "python" -repository "DEFAULT"
+
+  release_bot:
+    image: alpine:latest
+    secrets:
+      - SERVER
+      - LOGIN
+      - KEY
+    commands:
+      - cicd-pipeline-utils/scripts/bot.sh release -version "v1.2.0" -botId "ExampleBot"
