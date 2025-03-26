@@ -29,7 +29,7 @@ pipeline {
         stage('Checkout bot.sh Script') {
             steps {
                 script {
-                    sh 'git clone --branch v1.0 https://github.com/botcity-dev/cicd-pipeline-utils.git'
+                    sh 'git clone --branch v1.1 https://github.com/botcity-dev/cicd-pipeline-utils.git'
                     sh 'chmod +x cicd-pipeline-utils/scripts/bot.sh'
                 }
             }
