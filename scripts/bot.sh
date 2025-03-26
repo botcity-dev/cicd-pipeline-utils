@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Check if curl is installed
+if ! command -v curl >/dev/null 2>&1; then
+    echo "Error: 'curl' is not installed. Please install it to proceed."
+    exit 1
+fi
+
 # Ensure correct number of arguments
 if [ $# -lt 2 ]; then
     echo "Usage: $0 {deploy|update|release} -version <version> -botFile <botFilePath> -botId <botId> -type <technology> [-repository <repositoryLabel>]"
@@ -28,6 +34,11 @@ case $subcommand in
     deploy|update)
         if [ -z "$version" ] || [ -z "$botFile" ] || [ -z "$botId" ] || [ -z "$technology" ]; then
             echo "Missing required arguments for $subcommand. Make sure to provide -version, -botFile, -botId, and -type."
+            exit 1
+        fi
+
+        if [ ! -f "$botFile" ]; then
+            echo "The specified bot file does not exist: $botFile"
             exit 1
         fi
         ;;
