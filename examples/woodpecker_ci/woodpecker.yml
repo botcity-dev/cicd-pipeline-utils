@@ -4,7 +4,7 @@ pipeline:
     image: alpine/git
     commands:
       - git clone https://github.com/your-repo.git .
-  
+
   build:
     image: alpine:latest
     commands:
@@ -14,7 +14,7 @@ pipeline:
   checkout_script:
     image: alpine/git
     commands:
-      - git clone --branch v1.0 https://github.com/botcity-dev/cicd-pipeline-utils.git
+      - git clone --branch v1.1 https://github.com/botcity-dev/cicd-pipeline-utils.git
       - chmod +x cicd-pipeline-utils/scripts/bot.sh
 
   deploy_bot:
