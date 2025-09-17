@@ -1,36 +1,28 @@
+name: "Deploy and Release Bot"
 
-stages:
-  - build
-  - deploy
-  - release
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
 
 build_bot:
-  stage: build
+  image: ubuntu:latest
+  before_script:
+    - apt-get update && apt-get install -y curl file zip git
   script:
-    - git clone https://github.com/your-repo.git .
-    - chmod +x build.sh
+    # Build
+    - chmod +x ./build.sh
     - ./build.sh
 
-checkout_script:
-  stage: deploy
-  script:
+    # Clone scripts
     - git clone --branch v1.1 https://github.com/botcity-dev/cicd-pipeline-utils.git
     - chmod +x cicd-pipeline-utils/scripts/bot.sh
 
-deploy_bot:
-  stage: deploy
-  script:
-    - cicd-pipeline-utils/scripts/bot.sh deploy -version "v1.2.0" -botFile "./build/bot.zip" -botId "ExampleBot" -type "python" -repository "DEFAULT"
-  environment:
-    SERVER: $SERVER
-    LOGIN: $LOGIN
-    KEY: $KEY
+    # Deploy
+    - cicd-pipeline-utils/scripts/bot.sh deploy -version "v1.2.0 -botFile "./bot.zip" -botId "ExampleBot" -type "python" -repository "DEFAULT"
 
-release_bot:
-  stage: release
-  script:
-    - cicd-pipeline-utils/scripts/bot.sh release -version "v1.2.0" -botId "ExampleBot"
-  environment:
+    # Release
+    - cicd-pipeline-utils/scripts/bot.sh release -version "v1.2.0 -botId "ExampleBot"
+  variables:
     SERVER: $SERVER
     LOGIN: $LOGIN
     KEY: $KEY
