@@ -36,7 +36,7 @@ case $subcommand in
             echo "Missing required arguments for $subcommand. Make sure to provide -version, -botFile, -botId, and -type."
             exit 1
         fi
-
+        botFile="${botFile//\\//}"
         if [ ! -f "$botFile" ]; then
             echo "The specified bot file does not exist: $botFile"
             exit 1
