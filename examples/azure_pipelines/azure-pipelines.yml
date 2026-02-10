@@ -18,7 +18,7 @@ steps:
   displayName: 'Build the Bot'
 
 - script: |
-    git clone --branch v1.1 https://github.com/botcity-dev/cicd-pipeline-utils.git
+    git clone --branch v1.2 https://github.com/botcity-dev/cicd-pipeline-utils.git
     chmod +x cicd-pipeline-utils/scripts/bot.sh
   displayName: 'Checkout bot.sh from repository'
 

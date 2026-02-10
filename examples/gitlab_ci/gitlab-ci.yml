@@ -14,7 +14,7 @@ build_bot:
     - ./build.sh
 
     # Clone scripts
-    - git clone --branch v1.1 https://github.com/botcity-dev/cicd-pipeline-utils.git
+    - git clone --branch v1.2 https://github.com/botcity-dev/cicd-pipeline-utils.git
     - chmod +x cicd-pipeline-utils/scripts/bot.sh
 
     # Deploy
